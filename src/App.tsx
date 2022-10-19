@@ -7,6 +7,7 @@ function App() {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [goodGuess, setGoodGuess] = useState(false);
   const [streak, setStreak] = useState(0);
+  const [highScore, setHighScore] = useState(0);
 
   useEffect(() => {
     setCurColors(genColors());
@@ -33,6 +34,9 @@ function App() {
       setGoodGuess(true);
       setStreak(streak + 1);
     } else {
+      if (streak > highScore) {
+        setHighScore(streak);
+      }
       setStreak(0);
     }
   };
@@ -40,6 +44,10 @@ function App() {
   return (
     <div className='w-screen h-screen flex flex-col justify-center items-center bg-amber-400'>
       <h1 className='font-extrabold text-6xl p-10 text-slate-700'>Guess the color</h1>
+      <div className='flex items-center text-2xl font-bold text-slate-700 p-8'>
+        <span>High score: </span>
+        <span className='text-5xl text-orange-600 mx-4'>{highScore}</span>
+      </div>
       <div className='flex items-center text-2xl font-bold text-slate-700 p-8'>
         <span>Current streak: </span>
         <span className='text-5xl text-orange-600 mx-4'>{streak}</span>
