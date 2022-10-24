@@ -1,5 +1,7 @@
 import {useEffect, useState} from 'react';
 import Button from './Button';
+import useGenColor from './useGenColor';
+import {getRandInt} from './useGenColor';
 
 function App() {
   const [curColors, setCurColors] = useState<string[]>([]);
@@ -10,23 +12,11 @@ function App() {
   const [highScore, setHighScore] = useState(0);
 
   useEffect(() => {
-    setCurColors(genColors());
+    const colors = useGenColor();
+    setCurColors(colors);
+    setCorrectColor(colors[getRandInt(3)]);
     setGoodGuess(false);
   }, [goodGuess]);
-
-  const genColors = () => {
-    const hex = '0123456789ABCDEF';
-    const colors: string[] = [];
-
-    for (let i = 0; i < 3; i++) {
-      const indices = [...Array(6)].map(() => getRandInt(16));
-      colors.push(`#${indices.map(index => hex[index]).join('')}`);
-    }
-    setCorrectColor(colors[getRandInt(3)]);
-    return colors;
-  };
-
-  const getRandInt = (n: number) => Math.floor(Math.random() * n);
 
   const handlePick = (color: string) => {
     setIsCorrect(correctColor === color);
