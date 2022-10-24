@@ -19,10 +19,11 @@ function App() {
   }, [goodGuess]);
 
   const handlePick = (color: string) => {
-    setIsCorrect(correctColor === color);
-    if (correctColor === color) {
+    const guess = correctColor === color;
+    setIsCorrect(guess);
+    if (guess) {
       setGoodGuess(true);
-      setStreak(streak + 1);
+      setStreak(current => current + 1);
     } else {
       if (streak > highScore) {
         setHighScore(streak);
