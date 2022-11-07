@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import Button from './Button';
 import useGenColor from './useGenColor';
 import {getRandInt} from './useGenColor';
+import ScorePanel from './ScorePanel';
 
 function App() {
   const [curColors, setCurColors] = useState<string[]>([]);
@@ -35,18 +36,14 @@ function App() {
   return (
     <div className='w-screen h-screen flex flex-col justify-center items-center bg-amber-400'>
       <h1 className='font-extrabold text-6xl p-10 text-slate-700'>Guess the color</h1>
-      <div className='flex items-center text-2xl font-bold text-slate-700 p-8'>
-        <span>High score: </span>
-        <span className='text-5xl text-orange-600 mx-4'>{highScore}</span>
-      </div>
-      <div className='flex items-center text-2xl font-bold text-slate-700 p-8'>
-        <span>Current streak: </span>
-        <span className='text-5xl text-orange-600 mx-4'>{streak}</span>
-      </div>
+      <ScorePanel heading='High score: '>{highScore}</ScorePanel>
+      <ScorePanel heading='Current streak: '>{streak}</ScorePanel>
       <div className='w-60 h-60' style={{backgroundColor: correctColor}}></div>
       <div className='flex justify-center p-10'>
-        {curColors.map((c: string) => (
-          <Button key={c} color={c} handler={handlePick} />
+        {curColors.map((color: string) => (
+          <Button key={color} handler={handlePick}>
+            {color}
+          </Button>
         ))}
       </div>
       <div className={`${isCorrect ? 'text-green-500' : 'text-rose-500'} text-2xl font-bold`}>
